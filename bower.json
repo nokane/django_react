@@ -1,0 +1,22 @@
+{
+  "name": "django_react",
+  "homepage": "https://github.com/nokane/django_react",
+  "authors": [
+    "Niall O'Kane <okanenm@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.14.2",
+    "jquery": "~2.1.4"
+  }
+}
