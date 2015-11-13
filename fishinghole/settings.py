@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import ConfigParser
+from os.path import abspath, basename, dirname, join, normpath
 
 config = ConfigParser.RawConfigParser()
 config.read('/etc/fishinghole/config.cfg')
@@ -30,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DJANGO_ROOT = dirname(dirname(abspath(__file__)))  
+
 
 # Application definition
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pipeline',
+    'rest_framework'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,12 +58,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+TEMPLATES = [  
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
 ROOT_URLCONF = 'fishinghole.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,5 +122,49 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+print BASE_DIR
+SITE_ROOT = dirname(BASE_DIR)  
+SITE_NAME = basename(BASE_DIR)
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  
+STATIC_ROOT = normpath(join(BASE_DIR, 'static'))  
+STATICFILES_DIRS = ()  
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_FINDERS = (  
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+PIPELINE_COMPILERS = (  
+    'pipeline_browserify.compiler.BrowserifyCompiler',
+)
+
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'  
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+
+if DEBUG:  
+    PIPELINE_BROWSERIFY_ARGUMENTS = '-t babelify'
+
+PIPELINE_CSS = {  
+    'app_css': {
+        'source_filenames': (
+            'css/style.css',
+        ),
+        'output_filename': 'css/app_css.css',
+    },
+}
+
+PIPELINE_JS = {  
+    'app_js': {
+        'source_filenames': (
+            'js/bower_components/jquery/dist/jquery.min.js',
+            'js/bower_components/react/react-with-addons.js',
+            'js/app.browserify.js',
+        ),
+        'output_filename': 'js/app_js.js',
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "django_react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nokane/django_react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserify": {
+    "transform": ["babelify"]
+  },
+  "bugs": {
+    "url": "https://github.com/nokane/django_react/issues"
+  },
+  "homepage": "https://github.com/nokane/django_react#readme",
+  "devDependencies": {
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0"
+  },
+  "dependencies": {
+    "browserify": "^12.0.1",
+    "uglify-js": "^2.6.0"
+  }
+}
