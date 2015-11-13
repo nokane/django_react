@@ -4,3 +4,7 @@ static/bower_components
 *.pyc
 node_modules
 static/admin
+static/rest_framework
+static/css/app_css*
+static/js/app_js*
+static/js/app.browserify.browserified.js
