@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "browserify": {
-    "transform": ["babelify"]
+    "transform": [
+      "babelify"
+    ]
   },
   "bugs": {
     "url": "https://github.com/nokane/django_react/issues"
@@ -25,6 +27,9 @@
   },
   "dependencies": {
     "browserify": "^12.0.1",
+    "jquery": "^2.1.4",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
     "uglify-js": "^2.6.0"
   }
 }
